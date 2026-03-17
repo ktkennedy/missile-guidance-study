@@ -15,25 +15,47 @@ import numpy as np
 from dataclasses import dataclass, field
 from typing import Optional, Dict, List
 
-from dynamics.missile_3dof import Missile3DOF
-from dynamics.missile_6dof import Missile6DOF
-from guidance.proportional_navigation import ProportionalNavigation, compute_los_geometry
-from control.autopilot import TwoLoopAutopilot
-from control.three_axis_autopilot import ThreeAxisAutopilot
-from control.three_loop_autopilot import ThreeLoopAutopilot
-from control.actuator import FinActuator
-from sensors.seeker import SeekerModel
-from sensors.kalman_filter import AlphaBetaFilter
-from sensors.imu import IMUModel
-from sensors.gps_model import GPSModel
-from sensors.aided_navigation import AidedNavigationSystem
-from sensors.strapdown_ins import StrapdownINS
-from sensors.nav_kalman_filter import NavKalmanFilter
-from targets.target_models import Target
-from utils.coordinate_transforms import (
+from ..dynamics.missile_3dof import Missile3DOF
+from ..dynamics.missile_6dof import Missile6DOF
+from ..guidance.proportional_navigation import ProportionalNavigation, compute_los_geometry
+from ..control.autopilot import TwoLoopAutopilot
+from ..control.three_loop_autopilot import ThreeLoopAutopilot
+from ..control.actuator import FinActuator
+from ..sensors.seeker import SeekerModel
+from ..sensors.kalman_filter import AlphaBetaFilter
+from ..sensors.imu import IMUModel
+from ..sensors.gps_model import GPSModel
+from ..sensors.aided_navigation import AidedNavigationSystem
+from ..sensors.strapdown_ins import StrapdownINS
+from ..sensors.nav_kalman_filter import NavKalmanFilter
+from ..targets.target_models import Target
+from ..utils.coordinate_transforms import (
     euler_to_quat, quat_to_dcm, quat_normalize, wind_angles,
     dcm_to_euler,
 )
+
+
+class _ThreeAxisAutopilot:
+    """Minimal three-axis autopilot wrapper used by _run_6dof.
+
+    Delegates pitch and yaw to separate ThreeLoopAutopilot instances and
+    provides a simple roll-rate damper via proportional gain K_roll.
+    """
+
+    def __init__(self, pitch_ap: ThreeLoopAutopilot, yaw_ap: ThreeLoopAutopilot,
+                 K_roll: float = 0.1) -> None:
+        self.pitch_ap = pitch_ap
+        self.yaw_ap = yaw_ap
+        self.K_roll = K_roll
+
+    def compute(self, a_cmd_pitch, a_cmd_yaw,
+                a_meas_pitch, a_meas_yaw,
+                q_meas, r_meas, p_meas, dt):
+        """Return (delta_e, delta_r, delta_a) fin commands."""
+        delta_e = self.pitch_ap.compute(a_cmd_pitch, a_meas_pitch, q_meas, dt)
+        delta_r = self.yaw_ap.compute(a_cmd_yaw, a_meas_yaw, r_meas, dt)
+        delta_a = -self.K_roll * p_meas
+        return delta_e, delta_r, delta_a
 
 
 @dataclass
@@ -528,7 +550,7 @@ class EngagementSimulator:
             omega=cfg.autopilot_omega, zeta=cfg.autopilot_zeta,
             tau=cfg.autopilot_tau,
         )
-        three_axis_ap = ThreeAxisAutopilot(pitch_ap, yaw_ap, K_roll=cfg.K_roll)
+        three_axis_ap = _ThreeAxisAutopilot(pitch_ap, yaw_ap, K_roll=cfg.K_roll)
 
         actuator_e = FinActuator()
         actuator_r = FinActuator()
@@ -930,7 +952,7 @@ class EngagementSimulator:
                      state_hist, quat_hist, euler_hist, fin3_hist,
                      a_achieved_pitch=None, a_achieved_yaw=None):
         """Record one sample for 6-DOF history."""
-        from utils.coordinate_transforms import dcm_to_euler, quat_to_dcm, quat_normalize
+        from ..utils.coordinate_transforms import dcm_to_euler, quat_to_dcm, quat_normalize
 
         t_hist.append(t)
         mpos_hist.append(m_ned_pos.copy())

@@ -32,10 +32,7 @@ aerodynamics as implemented in MissileAerodynamics.
 import numpy as np
 from .atmosphere import StandardAtmosphere1976
 from .aerodynamics import MissileAerodynamics
-try:
-    from ..utils.coordinate_transforms import quat_to_dcm, quat_normalize, wind_angles
-except ImportError:
-    from utils.coordinate_transforms import quat_to_dcm, quat_normalize, wind_angles
+from ..utils.coordinate_transforms import quat_to_dcm, quat_normalize, wind_angles
 
 
 class Missile6DOF:

@@ -25,9 +25,9 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from utils.coordinate_transforms import quat_normalize
-from sensors.strapdown_ins import StrapdownINS
-from sensors.nav_kalman_filter import NavKalmanFilter
+from ..utils.coordinate_transforms import quat_normalize
+from .strapdown_ins import StrapdownINS
+from .nav_kalman_filter import NavKalmanFilter
 
 
 # ---------------------------------------------------------------------------

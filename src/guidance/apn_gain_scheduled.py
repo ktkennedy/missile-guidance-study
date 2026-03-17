@@ -5,7 +5,7 @@ parameterized by wavelet coefficients for Bayesian Optimization.
 """
 import numpy as np
 import pywt
-from guidance.proportional_navigation import compute_los_geometry
+from .proportional_navigation import compute_los_geometry
 
 
 class GainScheduledAPN:

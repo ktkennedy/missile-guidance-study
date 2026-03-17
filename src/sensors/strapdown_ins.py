@@ -18,10 +18,7 @@ Conventions:
 
 import numpy as np
 
-try:
-    from ..utils.coordinate_transforms import quat_to_dcm, quat_normalize
-except ImportError:
-    from utils.coordinate_transforms import quat_to_dcm, quat_normalize
+from ..utils.coordinate_transforms import quat_to_dcm, quat_normalize
 
 
 # ---------------------------------------------------------------------------
