@@ -217,12 +217,12 @@ def make_engagement_gif(out_path):
     ax.set_aspect("equal", adjustable="datalim")
 
     # artist init
-    missile_trail, = ax.plot([], [], "b-", lw=1.5, alpha=0.7, label="Missile (APN)")
-    target_trail,  = ax.plot([], [], "r--", lw=1.5, alpha=0.7, label="Target (3g weave)")
-    los_line,      = ax.plot([], [], color="gray", lw=0.8, linestyle=":", alpha=0.5)
-    missile_pos,   = ax.plot([], [], marker="^", ms=10, color="blue")
-    target_pos,    = ax.plot([], [], marker="o", ms=10, color="red")
-    intercept_star,= ax.plot([], [], marker="*", ms=18, color="gold", zorder=10)
+    missile_trail, = ax.plot([], [], "b-", lw=2.5, alpha=0.9, label="Missile (APN)")
+    target_trail,  = ax.plot([], [], "r--", lw=2.5, alpha=0.9, label="Target (3g weave)")
+    los_line,      = ax.plot([], [], color="gray", lw=1.0, linestyle=":", alpha=0.5)
+    missile_pos,   = ax.plot([], [], marker="^", ms=14, color="blue", zorder=5)
+    target_pos,    = ax.plot([], [], marker="o", ms=14, color="red", markeredgecolor="darkred", markeredgewidth=1.5, zorder=5)
+    intercept_star,= ax.plot([], [], marker="*", ms=22, color="gold", markeredgecolor="red", markeredgewidth=1, zorder=10)
 
     # compute range array
     R_arr = np.hypot(xt - xm, yt - ym)
@@ -347,14 +347,14 @@ def make_comparison_gif(out_path):
 
     # trajectory artists
     def make_traj_artists(ax, mc, tc):
-        m_trail, = ax.plot([], [], "-", color=mc, lw=1.5, alpha=0.8, label="Missile")
-        t_trail, = ax.plot([], [], "--", color=tc, lw=1.5, alpha=0.8, label="Target")
-        m_pos,   = ax.plot([], [], "^", ms=9, color=mc)
-        t_pos,   = ax.plot([], [], "o", ms=9, color=tc)
-        star,    = ax.plot([], [], "*", ms=16, color="gold", zorder=10)
-        txt = ax.text(0.03, 0.05, "", transform=ax.transAxes, fontsize=8,
+        m_trail, = ax.plot([], [], "-", color=mc, lw=2.5, alpha=0.9, label="Missile")
+        t_trail, = ax.plot([], [], "--", color=tc, lw=2.5, alpha=0.9, label="Target")
+        m_pos,   = ax.plot([], [], "^", ms=14, color=mc, zorder=5)
+        t_pos,   = ax.plot([], [], "o", ms=14, color=tc, markeredgecolor="darkred", markeredgewidth=1.5, zorder=5)
+        star,    = ax.plot([], [], "*", ms=22, color="gold", markeredgecolor="red", markeredgewidth=1, zorder=10)
+        txt = ax.text(0.03, 0.05, "", transform=ax.transAxes, fontsize=10,
                       bbox=dict(boxstyle="round", fc="white", alpha=0.8))
-        ax.legend(fontsize=7, loc="upper right")
+        ax.legend(fontsize=9, loc="upper right")
         return m_trail, t_trail, m_pos, t_pos, star, txt
 
     tpn_artists = make_traj_artists(ax_tpn_traj, "steelblue", "tomato")
