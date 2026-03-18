@@ -302,9 +302,9 @@ def make_comparison_gif(out_path):
     idx = np.linspace(0, N - 1, n_frames, dtype=int)
 
     # ── figure ──
-    fig, axes = plt.subplots(2, 2, figsize=(12, 8), facecolor="white")
+    fig, axes = plt.subplots(2, 2, figsize=(16, 10), facecolor="white")
     fig.suptitle("TPN vs APN: Maneuvering Target (3g Step Maneuver, N=4)",
-                 fontsize=13, fontweight="bold")
+                 fontsize=15, fontweight="bold")
     ax_tpn_traj, ax_apn_traj = axes[0, 0], axes[0, 1]
     ax_tpn_acc,  ax_apn_acc  = axes[1, 0], axes[1, 1]
     plt.tight_layout(rect=[0, 0, 1, 0.95], h_pad=3, w_pad=3)
@@ -319,12 +319,11 @@ def make_comparison_gif(out_path):
 
     def setup_traj_ax(ax, title, color):
         ax.set_facecolor("white")
-        ax.set_title(title, fontsize=11, fontweight="bold", color=color)
-        ax.set_xlabel("Downrange [m]", fontsize=8)
-        ax.set_ylabel("Crossrange [m]", fontsize=8)
-        ax.set_xlim(xlim); ax.set_ylim(ylim)
-        ax.tick_params(labelsize=7)
-        ax.set_aspect("equal", adjustable="datalim")
+        ax.set_title(title, fontsize=13, fontweight="bold", color=color)
+        ax.set_xlabel("Downrange (km)", fontsize=10)
+        ax.set_ylabel("Crossrange (m)", fontsize=10)
+        ax.set_xlim(xlim[0]/1000, xlim[1]/1000); ax.set_ylim(ylim)
+        ax.tick_params(labelsize=9)
 
     setup_traj_ax(ax_tpn_traj, "TPN (N=4)", "steelblue")
     setup_traj_ax(ax_apn_traj, "APN (N=4)", "darkorange")
@@ -395,13 +394,13 @@ def make_comparison_gif(out_path):
 
         def update_traj(arts, d, R):
             m_trail, t_trail, m_pos, t_pos, star, txt = arts
-            m_trail.set_data(d["xm"][:i+1], d["ym"][:i+1])
-            t_trail.set_data(d["xt"][:i+1], d["yt"][:i+1])
-            m_pos.set_data([d["xm"][i]], [d["ym"][i]])
-            t_pos.set_data([d["xt"][i]], [d["yt"][i]])
+            m_trail.set_data(d["xm"][:i+1]/1000, d["ym"][:i+1])
+            t_trail.set_data(d["xt"][:i+1]/1000, d["yt"][:i+1])
+            m_pos.set_data([d["xm"][i]/1000], [d["ym"][i]])
+            t_pos.set_data([d["xt"][i]/1000], [d["yt"][i]])
             txt.set_text(f"t={t_now:.1f}s  R={R[i]/1000:.2f}km")
             if d["intercepted"] and t_now >= d["intercept_time"] - 0.05:
-                star.set_data([d["xm"][-1]], [d["ym"][-1]])
+                star.set_data([d["xm"][-1]/1000], [d["ym"][-1]])
             else:
                 star.set_data([], [])
 

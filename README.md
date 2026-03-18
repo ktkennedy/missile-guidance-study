@@ -3,14 +3,6 @@
 
 Self-study project covering the full engineering scope of missile guidance and control — from theoretical derivation to 6-DOF simulation to system-level performance analysis. All parameters are derived from open literature; no classified or export-controlled data is included.
 
-![Key Results](results/hero_summary.png)
-
-**APN Guidance Engagement Simulation**
-
-![APN Engagement](results/engagement_animation.gif)
-
-**TPN vs APN Comparison (3g Step Maneuver)**
-
 ![TPN vs APN](results/guidance_comparison.gif)
 
 ---
