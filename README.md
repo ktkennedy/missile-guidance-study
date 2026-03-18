@@ -1,100 +1,120 @@
 # Missile Guidance & Control Study
+### 유도탄 유도조종 기법 연구
 
-[![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://python.org)
-[![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange.svg)](https://jupyter.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+Self-study project covering the full engineering scope of missile guidance and control — from theoretical derivation to 6-DOF simulation to system-level performance analysis. All parameters are derived from open literature; no classified or export-controlled data is included.
 
-> 유도탄 유도/제어 시스템의 이론과 시뮬레이션을 학습하며 정리한 노트북입니다.
-> 모든 파라미터는 공개 교재 기반이며, 기밀/수출통제 데이터는 포함하지 않습니다.
+---
 
-## 학습 로드맵
+## Study Scope
 
-이 프로젝트는 유도탄 GCU(Guidance Control Unit)의 핵심 서브시스템을 단계별로 학습한 기록입니다.
+This project maps directly to the four core tasks of a guidance & control engineering team.
 
-```
-[1] 유도법칙 → [2] 교전 시뮬레이션 → [3] 오토파일럿 → [4] 6DOF 동역학
-                                                              ↓
-              [6] 몬테카를로 ← [5] 항법 필터
-                    ↓
-        [7] MPC 유도 → [8] GP 보정 → [9] 베이지안 최적화
-        └──────── 개인 연구 ────────┘
-```
+**1. Guidance & Control Algorithm Design (유도 및 제어 알고리즘 설계)**
+Proportional navigation family (PPN/TPN/APN), optimal guidance law derivation via LQR and Riccati, model predictive control, 2-loop/3-loop autopilot design, gain scheduling.
 
-## Notebooks
+**2. Missile Modeling & Simulation (유도탄 모델링 및 시뮬레이션 수행)**
+3-DOF point-mass and 6-DOF rigid-body equations of motion, quaternion attitude kinematics, aerodynamic coefficient models, standard atmosphere, actuator dynamics.
 
-### 기본 학습 (Core Study)
+**3. Flight Trajectory & Hit Probability Prediction (비행궤적 산출 및 명중률 예측)**
+3D engagement simulation across multiple intercept geometries, Monte Carlo dispersion analysis, CEP computation, hit probability estimation as a function of system error budget.
 
-| # | 노트북 | 주제 | 참고문헌 |
-|---|--------|------|----------|
-| 01 | [비례항법 유도법칙](notebooks/01_proportional_navigation.ipynb) | PPN, TPN, APN 유도법칙 이론 및 비교 | Zarchan Ch.4-5 |
-| 02 | [3DOF 교전 시뮬레이션](notebooks/02_engagement_simulation.ipynb) | 질점 모델 교전, 시나리오별 분석 | Zarchan Ch.2, 8 |
-| 03 | [오토파일럿 설계](notebooks/03_autopilot_design.ipynb) | 2-loop/3-loop 오토파일럿, 주파수 응답 | Blakelock Ch.7-8, Garnell Ch.6 |
-| 04 | [6DOF 동역학](notebooks/04_6dof_dynamics.ipynb) | 쿼터니언 기반 강체 운동방정식 | Zipfel Ch.4-6, Stevens & Lewis |
-| 05 | [항법 필터](notebooks/05_navigation_filter.ipynb) | 칼만 필터, Strapdown INS, GPS-aided INS | Bar-Shalom Ch.5-6, Siouris |
-| 06 | [몬테카를로 분석](notebooks/06_monte_carlo_analysis.ipynb) | MC 시뮬레이션, CEP, 명중률 예측 | Zarchan Ch.11 |
+**4. System Requirements Analysis (체계/부체계 요구조건 분석)**
+Sensitivity analysis linking subsystem error sources to miss distance, requirements allocation from system to subsystem level, Monte Carlo verification of compliance margins, trade studies.
 
-### 개인 연구 (Research Exploration)
+---
 
-| # | 노트북 | 주제 | 비고 |
-|---|--------|------|------|
-| 07 | [MPC 유도](notebooks/07_mpc_guidance_research.ipynb) | 모델예측제어 기반 유도법칙 | LOS-relative 좌표, 제약조건 처리 |
-| 08 | [GP 공력 보정](notebooks/08_gp_aero_correction.ipynb) | 가우시안 프로세스로 공력 모델 보정 | 데이터 기반 모델 개선 |
-| 09 | [베이지안 최적화](notebooks/09_bayesian_optimization.ipynb) | BO를 활용한 유도 파라미터 튜닝 | 자동화된 파라미터 최적화 |
+## Notebook Index
 
-## Source Modules
+### Core Study (01–09)
 
-노트북에서 사용하는 핵심 구현체입니다.
+| # | Notebook | Topic | Reference |
+|---|----------|-------|-----------|
+| 01 | [Proportional Navigation](notebooks/01_proportional_navigation.ipynb) | PPN, TPN, APN — theory, derivation, comparative simulation | Zarchan Ch. 4–5 |
+| 02 | [Engagement Simulation](notebooks/02_engagement_simulation.ipynb) | 3-DOF point-mass engagement, scenario parametrics | Zarchan Ch. 2, 8 |
+| 03 | [Autopilot Design](notebooks/03_autopilot_design.ipynb) | 2-loop / 3-loop autopilot, frequency-domain analysis | Blakelock Ch. 7–8; Garnell Ch. 6 |
+| 04 | [6-DOF Dynamics](notebooks/04_6dof_dynamics.ipynb) | Quaternion-based rigid-body EOM, aerodynamics, atmosphere | Zipfel Ch. 4–6; Stevens & Lewis |
+| 05 | [Navigation Filter](notebooks/05_navigation_filter.ipynb) | Strapdown INS, EKF, GPS-aided INS, seeker model | Bar-Shalom Ch. 5–6; Siouris |
+| 06 | [Monte Carlo Analysis](notebooks/06_monte_carlo_analysis.ipynb) | MC dispersion simulation, CEP, hit probability | Zarchan Ch. 11 |
+| 07 | [MPC Guidance](notebooks/07_mpc_guidance_research.ipynb) | Model predictive control guidance in LOS-relative frame, constraint handling | — |
+| 08 | [GP Aerodynamic Correction](notebooks/08_gp_aero_correction.ipynb) | Gaussian process regression for aerodynamic model residual correction | — |
+| 09 | [Bayesian Optimization](notebooks/09_bayesian_optimization.ipynb) | BoTorch-based guidance parameter tuning via Bayesian optimization | — |
+
+### Integrated & Advanced (10–13)
+
+| # | Notebook | Topic |
+|---|----------|-------|
+| 10 | [MPC-GP-BO Pipeline](notebooks/10_mpc_gp_bo_pipeline.ipynb) | End-to-end integration: MPC guidance with GP residual correction, BO-tuned gains |
+| 11 | [Optimal Guidance Theory](notebooks/11_optimal_guidance_theory.ipynb) | Linearized engagement kinematics, LQR formulation, Riccati solution, derivation of TPN/APN as optimal guidance laws |
+| 12 | [System Requirements Analysis](notebooks/12_system_requirements_analysis.ipynb) | Miss distance sensitivity to subsystem errors, requirements allocation, Monte Carlo compliance verification |
+| 13 | [Flight Trajectory & Hit Prediction](notebooks/13_trajectory_and_hit_prediction.ipynb) | 3D trajectory simulation across head-on/tail-chase/crossing geometries, CEP contour analysis |
+
+---
+
+## Source Code Structure
 
 ```
 src/
-├── guidance/            # 유도법칙 (PPN/TPN/APN)
-├── control/             # 오토파일럿 (2-loop, 3-loop), 구동기
-├── dynamics/            # 3DOF/6DOF 동역학, 공력, 대기
-├── sensors/             # 시커, IMU, 칼만 필터, GPS-aided INS
-├── targets/             # 표적 기동 모델
-├── simulation/          # 교전 시뮬레이터, 몬테카를로
-└── utils/               # 좌표 변환, LOS 변환, 시각화
+├── guidance/
+│   ├── proportional_navigation.py   # PPN, TPN, APN implementations
+│   ├── optimal_guidance.py          # LQR-based optimal guidance laws
+│   ├── apn_gain_scheduled.py        # Gain-scheduled APN
+│   ├── mpc_casadi.py                # MPC guidance (CasADi NLP)
+│   └── gp_residual.py               # GP residual correction model
+├── control/                         # 2-loop / 3-loop autopilot, actuator
+├── dynamics/                        # 3-DOF / 6-DOF EOM, aerodynamics, atmosphere
+├── sensors/                         # Seeker, IMU, EKF, GPS-aided INS
+├── targets/                         # Target maneuver models
+├── simulation/                      # Engagement simulator, Monte Carlo runner
+└── utils/                           # Coordinate transforms, LOS geometry, plotting
 ```
 
-## Getting Started
+---
 
-```bash
-git clone https://github.com/ktkennedy/missile-guidance-study.git
-cd missile-guidance-study
-pip install -e .
-pip install jupyter
-jupyter notebook notebooks/
-```
+## Key Technical Highlights
 
-## 사용된 미사일 파라미터
+- **Full derivation chain**: Linearized engagement kinematics → LQR cost formulation → Riccati equation → closed-form optimal guidance law, showing TPN and APN as special cases.
+- **3-DOF and 6-DOF dynamics**: Point-mass model for rapid scenario sweep; full rigid-body model with quaternion attitude, aerodynamic coupling, and actuator lag for fidelity-critical analysis.
+- **Guidance law family**: PPN, TPN, APN with comparative miss-distance analysis; MPC guidance with hard constraints on acceleration and seeker angle.
+- **Navigation filter stack**: Strapdown INS error propagation, EKF-based GPS-aided INS, seeker noise model with glint and atmospheric effects.
+- **Monte Carlo framework**: Parallel dispersion runs over sensor noise, atmospheric uncertainty, and target maneuver; hit probability and CEP as output metrics.
+- **System requirements traceability**: Sensitivity coefficients from each subsystem error source to system-level miss distance; requirements allocated and verified via MC compliance margins.
+- **Data-driven correction**: Gaussian process regression on aerodynamic model residuals; BoTorch acquisition for guidance gain optimization.
 
-공개 교재에서 도출한 일반적인 공대공 미사일(AAM) 급 파라미터입니다.
+---
 
-| 파라미터 | 값 | 비고 |
-|----------|------|------|
-| 발사 질량 | 85.3 kg | 단거리 AAM급 |
-| 직경 | 0.127 m | 기준면적 0.01267 m² |
-| 추력 | 17,500 N | 2.2초 연소 |
-| 최대 가속도 | 40g | 유도 명령 제한 |
-| 시커 FOV | 60° 반각 | IR/RF |
-| 시커 노이즈 | 3 mrad (1σ) | 각도 측정 |
+## Reference Parameters
 
-## 참고문헌
+General short-range AAM-class parameters derived from open literature. Not representative of any specific fielded system.
 
-1. Zarchan, P. *Tactical and Strategic Missile Guidance*, 7th Ed., AIAA, 2019
-2. Siouris, G.M. *Missile Guidance and Control Systems*, Springer, 2004
-3. Zipfel, P.H. *Modeling and Simulation of Aerospace Vehicle Dynamics*, 3rd Ed., AIAA, 2014
-4. Garnell, P. *Guided Weapon Control Systems*, 2nd Ed., Pergamon, 1980
-5. Blakelock, J.H. *Automatic Control of Aircraft and Missiles*, 2nd Ed., Wiley, 1991
-6. Bar-Shalom, Y. et al. *Estimation with Applications to Tracking and Navigation*, Wiley, 2001
-7. Stevens, B.L. et al. *Aircraft Control and Simulation*, 3rd Ed., Wiley, 2016
+| Parameter | Value | Source basis |
+|-----------|-------|--------------|
+| Launch mass | 85.3 kg | Zarchan / open AAM data |
+| Body diameter | 0.127 m | Reference area 0.01267 m² |
+| Motor thrust | 17,500 N | 2.2 s burn |
+| Max lateral acceleration | 40 g | Guidance command limit |
+| Seeker FOV (half-angle) | 60 deg | IR/RF generic |
+| Seeker noise (1-sigma) | 3 mrad | Angular measurement |
+
+---
+
+## Tech Stack
+
+Python 3.9+, NumPy, SciPy, CasADi, GPyTorch, BoTorch, Matplotlib, Jupyter
+
+---
+
+## References
+
+1. Zarchan, P. *Tactical and Strategic Missile Guidance*, 7th Ed. AIAA, 2019.
+2. Siouris, G.M. *Missile Guidance and Control Systems*. Springer, 2004.
+3. Zipfel, P.H. *Modeling and Simulation of Aerospace Vehicle Dynamics*, 3rd Ed. AIAA, 2014.
+4. Blakelock, J.H. *Automatic Control of Aircraft and Missiles*, 2nd Ed. Wiley, 1991.
+5. Garnell, P. *Guided Weapon Control Systems*, 2nd Ed. Pergamon, 1980.
+6. Bar-Shalom, Y. et al. *Estimation with Applications to Tracking and Navigation*. Wiley, 2001.
+7. Stevens, B.L. et al. *Aircraft Control and Simulation*, 3rd Ed. Wiley, 2016.
+
+---
 
 ## Disclaimer
 
-이 프로젝트는 **학습 목적**으로 작성되었습니다.
-모든 파라미터는 공개 교재 및 논문에서 도출한 일반적인 추정치이며,
-특정 실전 무기체계와 무관합니다. 기밀, 수출통제(ITAR/EAR) 데이터는 포함하지 않습니다.
-
-## License
-
-MIT License
+This project is for study and portfolio purposes. All parameters are general estimates derived from open textbooks and public literature. No classified, proprietary, or export-controlled (ITAR/EAR) data is included. This work is not affiliated with or representative of any defense organization or program.

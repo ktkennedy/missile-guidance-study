@@ -10,3 +10,7 @@ venv/
 *.so
 .DS_Store
 results/*.pkl
+.claude/
+.omc/
+Track_opti_pre/
+verification_report.docx
