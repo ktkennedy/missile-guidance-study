@@ -25,28 +25,16 @@ Sensitivity analysis linking subsystem error sources to miss distance, requireme
 
 ## Notebook Index
 
-### Core Study (01–09)
-
 | # | Notebook | Topic | Reference |
 |---|----------|-------|-----------|
-| 01 | [Proportional Navigation](notebooks/01_proportional_navigation.ipynb) | PPN, TPN, APN — theory, derivation, comparative simulation | Zarchan Ch. 4–5 |
-| 02 | [Engagement Simulation](notebooks/02_engagement_simulation.ipynb) | 3-DOF point-mass engagement, scenario parametrics | Zarchan Ch. 2, 8 |
-| 03 | [Autopilot Design](notebooks/03_autopilot_design.ipynb) | 2-loop / 3-loop autopilot, frequency-domain analysis | Blakelock Ch. 7–8; Garnell Ch. 6 |
-| 04 | [6-DOF Dynamics](notebooks/04_6dof_dynamics.ipynb) | Quaternion-based rigid-body EOM, aerodynamics, atmosphere | Zipfel Ch. 4–6; Stevens & Lewis |
-| 05 | [Navigation Filter](notebooks/05_navigation_filter.ipynb) | Strapdown INS, EKF, GPS-aided INS, seeker model | Bar-Shalom Ch. 5–6; Siouris |
-| 06 | [Monte Carlo Analysis](notebooks/06_monte_carlo_analysis.ipynb) | MC dispersion simulation, CEP, hit probability | Zarchan Ch. 11 |
-| 07 | [MPC Guidance](notebooks/07_mpc_guidance_research.ipynb) | Model predictive control guidance in LOS-relative frame, constraint handling | — |
-| 08 | [GP Aerodynamic Correction](notebooks/08_gp_aero_correction.ipynb) | Gaussian process regression for aerodynamic model residual correction | — |
-| 09 | [Bayesian Optimization](notebooks/09_bayesian_optimization.ipynb) | BoTorch-based guidance parameter tuning via Bayesian optimization | — |
-
-### Integrated & Advanced (10–13)
-
-| # | Notebook | Topic |
-|---|----------|-------|
-| 10 | [MPC-GP-BO Pipeline](notebooks/10_mpc_gp_bo_pipeline.ipynb) | End-to-end integration: MPC guidance with GP residual correction, BO-tuned gains |
-| 11 | [Optimal Guidance Theory](notebooks/11_optimal_guidance_theory.ipynb) | Linearized engagement kinematics, LQR formulation, Riccati solution, derivation of TPN/APN as optimal guidance laws |
-| 12 | [System Requirements Analysis](notebooks/12_system_requirements_analysis.ipynb) | Miss distance sensitivity to subsystem errors, requirements allocation, Monte Carlo compliance verification |
-| 13 | [Flight Trajectory & Hit Prediction](notebooks/13_trajectory_and_hit_prediction.ipynb) | 3D trajectory simulation across head-on/tail-chase/crossing geometries, CEP contour analysis |
+| 01 | [Proportional Navigation & Engagement](notebooks/01_proportional_navigation.ipynb) | PPN/TPN/APN theory and derivation, 3-DOF engagement simulation across multiple geometries | Zarchan Ch. 4–5 |
+| 03 | [Autopilot Design](notebooks/03_autopilot_design.ipynb) | 2-loop / 3-loop autopilot, Bode analysis, gain scheduling across Mach | Blakelock Ch. 7–8; Garnell Ch. 6 |
+| 04 | [6-DOF Dynamics](notebooks/04_6dof_dynamics.ipynb) | Quaternion-based rigid-body EOM, aerodynamics, standard atmosphere | Zipfel Ch. 4–6; Stevens & Lewis |
+| 05 | [Navigation Filter](notebooks/05_navigation_filter.ipynb) | Kalman filter → Strapdown INS → 15-state GPS-aided EKF | Bar-Shalom Ch. 5–6; Siouris |
+| 06 | [Monte Carlo Analysis](notebooks/06_monte_carlo_analysis.ipynb) | MC dispersion, CEP, hit probability, sensitivity ranking | Zarchan Ch. 11 |
+| 07 | [MPC Guidance Research](notebooks/07_mpc_guidance_research.ipynb) | MPC in LOS-relative frame, constraint handling, GP+BO pipeline extension | — |
+| 11 | [Optimal Guidance Theory](notebooks/11_optimal_guidance_theory.ipynb) | Linearized kinematics → LQR → Riccati → TPN/APN as optimal limiting cases | Zarchan Ch. 5 |
+| 12 | [System Requirements Analysis](notebooks/12_system_requirements_analysis.ipynb) | Miss budget, subsystem requirements derivation, MC compliance verification | — |
 
 ---
 
